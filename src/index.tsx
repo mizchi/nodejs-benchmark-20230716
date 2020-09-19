@@ -1,9 +1,10 @@
 import path from "path";
-
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { DH_UNABLE_TO_CHECK_GENERATOR } from "constants";
 
+const USE_FASTIFY = process.env.FASTIFY === "true";
 const USE_HEAPDUMP = process.env.HEAPDUMP === "true";
 if (USE_HEAPDUMP) {
   const heapdump = require("heapdump");
@@ -37,17 +38,32 @@ function Tree(props: { depth: number }) {
   );
 }
 
-const id = Math.random();
-function createApp() {
-  const app = express();
-  const index = (_req: express.Request, res: express.Response) => {
-    const n = Math.round(1 + Math.random() * 4);
-    ReactDOMServer.renderToNodeStream(<Tree depth={n} />).pipe(res);
-  };
-  app.get("/", index);
-  return app;
-}
+const index = (_req: any, res: any) => {
+  const n = Math.round(1 + Math.random() * 4);
+  ReactDOMServer.renderToNodeStream(<Tree depth={n} />).pipe(res);
+};
 
-createApp().listen(PORT, () => {
-  console.log("started", id);
-});
+// function createApp() {
+//   // const app = express();
+//   return app;
+// }
+
+if (USE_FASTIFY) {
+  console.log("start as fastify", PORT);
+  const fastify = require("fastify");
+  const app = fastify({ logger: true });
+  app.get("/", index);
+  app.listen(Number(PORT), "0.0.0.0", (err: any, address: any) => {
+    if (err) {
+      app.log.error(err);
+      process.exit(1);
+    }
+    console.log("fastify started", err, address);
+  });
+} else {
+  const app = express();
+  app.get("/", index);
+  app.listen(Number(PORT), () => {
+    console.log("started", PORT);
+  });
+}
