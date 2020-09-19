@@ -1,9 +1,9 @@
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import os from "os";
 
-console.log("process.env", process.env.CLUSTER, process.env.NODE_ENV);
+console.log("process.env", process.env.NODE_ENV);
+const PORT = process.env.PORT ?? 4000;
 
 function Tree(props: { depth: number }) {
   return (
@@ -33,6 +33,6 @@ function createApp() {
   return app;
 }
 
-createApp().listen(4000, () => {
+createApp().listen(PORT, () => {
   console.log("started", id);
 });

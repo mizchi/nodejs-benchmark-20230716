@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "0x:lib": "tsc -p . && rimraf '*.0x' && NODE_ENV=production CLUSTER=false 0x -P 'yarn autocannon localhost:4000' --open -- node lib/index.js",
-    "0x:bundled": "webpack --mode production && rimraf '*.0x' && 0x -P 'yarn autocannon localhost:4000' --open -- node dist/main.js"
+    "0x:lib": "tsc -p . && rimraf '*.0x' && NODE_ENV=production CLUSTER=false 0x -P 'yarn autocannon localhost:4000' --open -- node lib/index.js"
   },
   "dependencies": {
     "autocannon": "^6.4.0",
