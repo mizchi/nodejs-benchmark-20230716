@@ -4,7 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "0x:lib": "tsc -p . && rimraf '*.0x' && NODE_ENV=production CLUSTER=false 0x -P 'yarn autocannon localhost:4000' --open -- node lib/index.js"
+    "build": "tsc -p .",
+    "start:pm2": "yarn build && pm2 restart pm2.config.js",
+    "start": "yarn build && NODE_ENV=production lib/index.js",
+    "start:heapdump": "yarn build && PORT=4000 NODE_ENV=production HEAPDUMP=true node --expose-gc lib/index.js",
+    "start:dev": "yarn build && NODE_ENV=production lib/index.js",
+    "0x:lib": "yarn build && rimraf '*.0x' && NODE_ENV=production 0x -P 'yarn autocannon localhost:4000' --open -- node lib/index.js"
   },
   "dependencies": {
     "autocannon": "^6.4.0",
@@ -16,6 +21,7 @@
   "devDependencies": {
     "0x": "^4.10.0",
     "@types/express": "^4.17.8",
+    "@types/heapdump": "^0.3.1",
     "@types/node": "^14.11.1",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",

@@ -111,3 +111,4 @@ dist
 
 lib
 *.0x
+*.heapsnapshot

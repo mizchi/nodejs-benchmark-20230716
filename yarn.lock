@@ -178,6 +178,11 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/heapdump@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@types/heapdump/-/heapdump-0.3.1.tgz#5f062cd1d8a6a3854f8fc470281ca29871a32399"
+  integrity sha512-1BaXjnso0bPxgG+Ngh1RKXxyjaugFN++xlXZxdRQxQVosIQf7DuJ6PiIRMCQJfL3MJRe02+zp8ApTsza3sCMgg==
+
 "@types/mime@*":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.3.tgz#c893b73721db73699943bfc3653b1deb7faa4a3a"

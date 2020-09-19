@@ -1,8 +1,23 @@
+import path from "path";
+
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 
-console.log("process.env", process.env.NODE_ENV);
+const USE_HEAPDUMP = process.env.HEAPDUMP === "true";
+if (USE_HEAPDUMP) {
+  const heapdump = require("heapdump");
+  console.log("start heapdump");
+  process.on("SIGINT", function () {
+    const out = path.join(__dirname, "../" + Date.now() + ".heapsnapshot");
+    console.log("dump", out);
+    global.gc(); // gc関数は --expose-gc フラグを付ける必要があります。
+    heapdump.writeSnapshot(out);
+    //終了処理…
+    process.exit(0);
+  });
+}
+
 const PORT = process.env.PORT ?? 4000;
 
 function Tree(props: { depth: number }) {
