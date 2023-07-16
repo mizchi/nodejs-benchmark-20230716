@@ -6,6 +6,11 @@ nodejs benchmark playground
 - autocannon
 - Docker
 
+## stats
+
+- dist/main.cjs: 103k
+- docker-image: 161MB
+
 ## Build and Run
 
 ```bash
