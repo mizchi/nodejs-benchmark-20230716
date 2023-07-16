@@ -1,8 +1,7 @@
-import express from "express";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-
-const PORT = process.env.PORT ?? 4000;
+import { serve } from '@hono/node-server'
+import { Hono } from 'hono'
+import { Suspense } from "react";
+import { renderToReadableStream } from "react-dom/server";
 
 function Tree(props: { depth: number }) {
   return (
@@ -21,15 +20,24 @@ function Tree(props: { depth: number }) {
   );
 }
 
-const index = (_req: any, res: any) => {
+const app = new Hono()
+app.get('/', async (_c) => {
   const n = Math.round(1 + Math.random() * 4);
-  // ReactDOMServer.renderToNodeStream(<Tree depth={n} />).pipe(res);
-  res.send(ReactDOMServer.renderToString(<Tree depth={n} />));
-};
+  const stream = await renderToReadableStream(
+    <html>
+      <body>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Tree depth={n} />
+        </Suspense>
+      </body>
+    </html>
+  )
+  return new Response(stream, {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'Content-Type': 'text/html',
+    },
+  })
+})
 
-const app = express();
-// const app = require("fastify")();
-app.get("/", index);
-app.listen(Number(PORT), () => {
-  console.log("started", PORT);
-});
+serve(app)

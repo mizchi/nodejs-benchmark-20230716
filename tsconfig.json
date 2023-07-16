@@ -2,9 +2,9 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
-    "target": "es2019",
-    "module": "commonjs",
-    "jsx": "react",
+    "target": "es2020",
+    "module": "Node16",
+    "jsx": "react-jsx",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,

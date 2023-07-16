@@ -1,36 +1,29 @@
 {
-  "name": "try-bench",
-  "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --mode production",
-    "pm2:start": "yarn build && pm2 restart pm2.config.js",
-    "pm2:stop": "yarn pm2 kill",
-    "pm2:bench": "yarn pm2:start && autocannon localhost:4000 && yarn pm2:stop",
-    "start": "yarn build && NODE_ENV=production lib/index.js",
-    "start:heapdump": "yarn build && PORT=4000 NODE_ENV=production HEAPDUMP=true node --expose-gc lib/index.js",
-    "perf:flamegraph": "yarn build && rimraf '*.0x' && NODE_ENV=production 0x -P 'yarn autocannon localhost:4000' --open -- node lib/index.js"
+    "build": "vite build",
+    "analyze": "vite-bundle-visualizer",
+    "start": "npm run build && NODE_ENV=production lib/index.js",
+    "perf:flamegraph": "npm run build && rimraf '*.0x' && NODE_ENV=production 0x -P 'npx autocannon localhost:3000' --open -- node dist/main.cjs"
   },
   "devDependencies": {
-    "@types/express": "^4.17.8",
-    "@types/node": "^14.11.1",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "autocannon": "^6.4.0",
-    "express": "^4.17.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "fastify": "^3.4.1",
-    "rimraf": "^3.0.2",
-    "ts-loader": "^8.0.4",
-    "typescript": "^4.0.2",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "@hono/node-server": "^1.0.2",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "autocannon": "^7.11.0",
+    "hono": "^3.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.4",
+    "vite-bundle-visualizer": "^0.8.0"
   },
   "optionalDependencies": {
-    "pm2": "^4.4.1",
-    "0x": "^4.10.0",
+    "0x": "^5.5.0",
     "heapdump": "^0.3.15"
   }
 }

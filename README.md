@@ -1,27 +1,24 @@
-# nodejs-benchmark-playground
+# nodejs-benchmark-playground-20230716
 
-benchmark playground
+nodejs benchmark playground
 
 - 0x
 - autocannon
-- heapdump
 - Docker
-- cluster
 
 ## Build and Run
 
-```
-$ yarn tsc -p .
-$ node lib/index.js # single core
-$ node lib/with-cluster.js # cluster
-$ node lib/with-heapdump.js # heapdump
+```bash
+$ npm install
+$ npm run build
+$ node dist/main.cjs
 ```
 
 ## Docker
 
-```
+```bash
 docker build . -t nodejs-benchmark
-docker run --rm -p 4000:4000 nodejs-benchmark
+docker run --rm -p 3000:3000 nodejs-benchmark
 ```
 
 ## LICENSE
